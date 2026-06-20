@@ -1,5 +1,4 @@
-import Recipe from "../models/RecipeModel.js";
-// 1. GET ALL (Feed)
+import Recipe from "../models/kitchenmodel.js";
 export const getRecipes = async (req, res) => {
   try {
     const recipes = await Recipe.find({});
