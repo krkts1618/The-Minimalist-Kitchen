@@ -11,7 +11,9 @@ export default function Profile() {
   useEffect(() => {
     const fetchLedger = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/recipes");
+        const res = await fetch(
+          "https://the-minimalist-kitchen.onrender.com/api/recipes",
+        );
         if (!res.ok) throw new Error("Failed to connect to backend vault");
         const data = await res.json();
         setRecipes(data);
@@ -33,9 +35,12 @@ export default function Profile() {
 
     setDeletingId(id);
     try {
-      const res = await fetch(`http://localhost:5000/api/recipes/${id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `https://the-minimalist-kitchen.onrender.com/api/recipes/${id}`,
+        {
+          method: "DELETE",
+        },
+      );
 
       if (!res.ok) throw new Error("Server refused deletion request");
 

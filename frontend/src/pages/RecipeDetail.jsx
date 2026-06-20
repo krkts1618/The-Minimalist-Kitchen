@@ -16,7 +16,9 @@ export default function RecipeDetail() {
   useEffect(() => {
     const fetchSingleRecipe = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/recipes/${id}`);
+        const res = await fetch(
+          `https://the-minimalist-kitchen.onrender.com/api/recipes/${id}`,
+        );
         if (!res.ok) throw new Error("Failed to fetch dish details");
 
         const data = await res.json();
@@ -59,9 +61,10 @@ export default function RecipeDetail() {
   };
 
   // Calculate progress bar percentage
-  const progressPercent = initialSeconds > 0 
-    ? ((initialSeconds - timerSeconds) / initialSeconds) * 100 
-    : 0;
+  const progressPercent =
+    initialSeconds > 0
+      ? ((initialSeconds - timerSeconds) / initialSeconds) * 100
+      : 0;
 
   if (loading) {
     return (
@@ -77,7 +80,10 @@ export default function RecipeDetail() {
         <p className="text-4xl mb-2">🫗</p>
         <h2 className="text-2xl font-bold text-textPrimary">Dish Not Found</h2>
         <p className="text-textSecondary text-sm mt-1">{error}</p>
-        <Link to="/" className="mt-6 inline-block bg-accentCyan text-[#0A0F14] font-bold px-6 py-2.5 rounded-xl text-sm">
+        <Link
+          to="/"
+          className="mt-6 inline-block bg-accentCyan text-[#0A0F14] font-bold px-6 py-2.5 rounded-xl text-sm"
+        >
           ← Back to Kitchen
         </Link>
       </div>
@@ -86,17 +92,22 @@ export default function RecipeDetail() {
 
   return (
     <div className="max-w-4xl mx-auto p-6 md:p-10">
-      
       {/* Top Navigation */}
-      <Link to="/" className="text-xs font-bold uppercase tracking-wider text-accentCyan hover:underline flex items-center gap-1 mb-6">
+      <Link
+        to="/"
+        className="text-xs font-bold uppercase tracking-wider text-accentCyan hover:underline flex items-center gap-1 mb-6"
+      >
         <span>←</span> Back to all Curations
       </Link>
 
       {/* Hero Header */}
       <div className="bg-surface border border-borderCool rounded-3xl overflow-hidden shadow-lg mb-10">
         <div className="h-64 sm:h-80 md:h-96 w-full overflow-hidden relative">
-          <img 
-            src={recipe.imageUrl || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=80"} 
+          <img
+            src={
+              recipe.imageUrl ||
+              "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=80"
+            }
             alt={recipe.title}
             className="w-full h-full object-cover"
           />
@@ -109,23 +120,30 @@ export default function RecipeDetail() {
               {recipe.category}
             </span>
           </div>
-          
+
           <h1 className="text-3xl sm:text-4xl font-extrabold text-textPrimary tracking-tight">
             {recipe.title}
           </h1>
-          
+
           <p className="mt-4 text-textSecondary text-sm sm:text-base leading-relaxed">
-            {recipe.description || "A classic, rich, and deeply spiced traditional culinary preparation."}
+            {recipe.description ||
+              "A classic, rich, and deeply spiced traditional culinary preparation."}
           </p>
 
           {/* ◄── FIXED: Logged date removed, Portion kept clean */}
           <div className="mt-6 pt-6 border-t border-borderCool flex flex-wrap items-center gap-8 text-sm font-semibold text-textPrimary">
             <div>
-              <span className="text-textSecondary block text-xs uppercase tracking-wider">Estimated Time</span>
-              <span className="text-base font-bold text-accentCyan">⏱️ {recipe.prepTime}</span>
+              <span className="text-textSecondary block text-xs uppercase tracking-wider">
+                Estimated Time
+              </span>
+              <span className="text-base font-bold text-accentCyan">
+                ⏱️ {recipe.prepTime}
+              </span>
             </div>
             <div>
-              <span className="text-textSecondary block text-xs uppercase tracking-wider">Portion</span>
+              <span className="text-textSecondary block text-xs uppercase tracking-wider">
+                Portion
+              </span>
               <span className="text-base">🍽️ {recipe.servings} Servings</span>
             </div>
           </div>
@@ -134,9 +152,13 @@ export default function RecipeDetail() {
           <div className="mt-8 bg-canvas/60 border border-borderCool rounded-2xl p-5 shadow-inner">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-3">
               <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-textSecondary block">Kitchen Assistant</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-textSecondary block">
+                  Kitchen Assistant
+                </span>
                 <span className="text-2xl font-mono font-extrabold tracking-tight text-textPrimary">
-                  {timerSeconds === 0 ? "🎉 DISH READY!" : formatTime(timerSeconds)}
+                  {timerSeconds === 0
+                    ? "🎉 DISH READY!"
+                    : formatTime(timerSeconds)}
                 </span>
               </div>
 
@@ -145,10 +167,10 @@ export default function RecipeDetail() {
                   onClick={() => setIsRunning(!isRunning)}
                   disabled={timerSeconds === 0}
                   className={`px-5 py-2 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer ${
-                    isRunning 
-                      ? "bg-amber-500 hover:bg-amber-600 text-black shadow-md" 
-                      : timerSeconds === 0 
-                        ? "bg-borderCool text-textSecondary cursor-not-allowed" 
+                    isRunning
+                      ? "bg-amber-500 hover:bg-amber-600 text-black shadow-md"
+                      : timerSeconds === 0
+                        ? "bg-borderCool text-textSecondary cursor-not-allowed"
                         : "bg-accentCyan hover:bg-cyan-400 text-[#0A0F14] shadow-md shadow-accentCyan/10 scale-[1.02]"
                   }`}
                 >
@@ -168,30 +190,36 @@ export default function RecipeDetail() {
 
             {/* Timer Progress Bar */}
             <div className="w-full bg-surface h-2 rounded-full overflow-hidden border border-borderCool/40">
-              <div 
+              <div
                 className="bg-accentCyan h-full transition-all duration-1000 ease-linear"
                 style={{ width: `${progressPercent}%` }}
               ></div>
             </div>
           </div>
-
         </div>
       </div>
 
       {/* Two Column Section: Ingredients vs Instructions */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-        
         {/* Left: Ingredients */}
         <div className="md:col-span-5 bg-surface border border-borderCool rounded-2xl p-6 h-fit">
           <h3 className="text-lg font-bold text-textPrimary mb-4 pb-2 border-b border-borderCool flex items-center justify-between">
             <span>Ingredients</span>
-            <span className="text-xs bg-canvas px-2.5 py-1 rounded-md text-accentCyan font-mono font-bold">{recipe.ingredients?.length || 0} items</span>
+            <span className="text-xs bg-canvas px-2.5 py-1 rounded-md text-accentCyan font-mono font-bold">
+              {recipe.ingredients?.length || 0} items
+            </span>
           </h3>
-          
+
           <ul className="space-y-3">
             {recipe.ingredients?.map((ing, i) => (
-              <li key={i} className="flex items-start gap-2.5 text-sm text-textSecondary hover:text-textPrimary transition-colors">
-                <input type="checkbox" className="mt-1 rounded bg-canvas border-borderCool text-accentCyan focus:ring-0 cursor-pointer shadow-sm" />
+              <li
+                key={i}
+                className="flex items-start gap-2.5 text-sm text-textSecondary hover:text-textPrimary transition-colors"
+              >
+                <input
+                  type="checkbox"
+                  className="mt-1 rounded bg-canvas border-borderCool text-accentCyan focus:ring-0 cursor-pointer shadow-sm"
+                />
                 <span className="leading-snug">{ing}</span>
               </li>
             ))}
@@ -203,7 +231,7 @@ export default function RecipeDetail() {
           <h3 className="text-lg font-bold text-textPrimary mb-4 pb-2 border-b border-borderCool">
             Preparation Steps
           </h3>
-          
+
           <ol className="space-y-6">
             {recipe.instructions?.map((step, i) => (
               <li key={i} className="flex gap-4 group">
@@ -217,9 +245,7 @@ export default function RecipeDetail() {
             ))}
           </ol>
         </div>
-
       </div>
-
     </div>
   );
 }

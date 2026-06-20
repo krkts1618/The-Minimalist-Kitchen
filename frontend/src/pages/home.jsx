@@ -30,7 +30,9 @@ export default function Home() {
   useEffect(() => {
     const fetchCloudRecipes = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/recipes");
+        const res = await fetch(
+          "https://the-minimalist-kitchen.onrender.com/api/recipes",
+        );
         if (!res.ok) throw new Error("Backend vault refused connection");
 
         const liveData = await res.json();
@@ -61,7 +63,6 @@ export default function Home() {
   return (
     <div className="max-w-7xl mx-auto p-6 md:p-8">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        
         {/* ================= SIDEBAR ================= */}
         <aside className="lg:col-span-1 bg-surface border border-borderCool rounded-2xl p-6 h-fit lg:sticky lg:top-24 shadow-sm transition-colors duration-300">
           <div className="mb-6">
@@ -145,19 +146,25 @@ export default function Home() {
           ) : filteredRecipes.length === 0 ? (
             <div className="col-span-full flex flex-col items-center justify-center py-16 bg-surface/40 border border-borderCool rounded-2xl text-textSecondary">
               <p className="text-4xl mb-3">🍽️</p>
-              <p className="text-lg font-bold text-textPrimary">No matching dishes</p>
-              <p className="text-xs mt-1">Try searching for a different keyword</p>
+              <p className="text-lg font-bold text-textPrimary">
+                No matching dishes
+              </p>
+              <p className="text-xs mt-1">
+                Try searching for a different keyword
+              </p>
             </div>
           ) : (
             /* ◄── LOCKED: gridRef active only in the post-load safe zone */
-            <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div
+              ref={gridRef}
+              className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
+            >
               {filteredRecipes.map((recipe, index) => (
                 <RecipeCard key={recipe._id} recipe={recipe} index={index} />
               ))}
             </div>
           )}
         </section>
-
       </div>
     </div>
   );
