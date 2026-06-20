@@ -1,5 +1,4 @@
-import Recipe from "../models/recipeModel.js"; // ◄── Double check your 'models' folder is lowercase 'm'!
-
+import Recipe from "../models/RecipeModel.js";
 // 1. GET ALL (Feed)
 export const getRecipes = async (req, res) => {
   try {
