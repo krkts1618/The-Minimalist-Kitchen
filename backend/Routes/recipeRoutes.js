@@ -8,11 +8,11 @@ import {
 } from "../controllers/recipeController.js";
 
 const router = express.Router();
-
-router.get("/", getRecipes);
-router.get("/:id", getRecipeById);
-router.post("/", createRecipe);
-router.post("/bulk", createRecipesBulk);
-router.delete("/:id", deleteRecipe); /* 👈 2. Open the kill lane */
+import verifyToken from "../middleware/authMiddleware.js";
+router.get("/", verifyToken, getRecipes);
+router.get("/:id", verifyToken, getRecipeById);
+router.post("/", verifyToken, createRecipe);
+router.post("/bulk", verifyToken, createRecipesBulk);
+router.delete("/:id", verifyToken, deleteRecipe);
 
 export default router;
