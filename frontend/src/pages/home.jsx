@@ -1,6 +1,7 @@
 import { useState, useEffect, useDeferredValue } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import RecipeCard from "../components/RecipeCard";
+import API from "../services/api";
 
 const CATEGORIES = [
   "Breakfast",
@@ -30,17 +31,14 @@ export default function Home() {
   useEffect(() => {
     const fetchCloudRecipes = async () => {
       try {
-        const res = await fetch(
-          "https://the-minimalist-kitchen.onrender.com/api/recipes",
-        );
-        if (!res.ok) throw new Error("Backend vault refused connection");
+        // Use your custom API instance instead of raw fetch
+        const { data } = await API.get("/recipes");
 
-        const liveData = await res.json();
-        setRecipes(liveData);
+        setRecipes(data);
         setLoading(false);
       } catch (err) {
         console.error("🔴 Network drop: ", err);
-        setError(err.message);
+        setError(err.response?.data?.message || err.message);
         setLoading(false);
       }
     };
