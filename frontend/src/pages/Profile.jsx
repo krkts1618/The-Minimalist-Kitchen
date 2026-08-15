@@ -1,19 +1,36 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import API from "../services/api";
+
 export default function Profile() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
 
+  // Dynamic User State
+  const [currentUser, setCurrentUser] = useState({
+    username: "Chef",
+    email: "chef@kitchen.com",
+  });
+
+  // Load user info from localStorage on mount
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      try {
+        setCurrentUser(JSON.parse(savedUser));
+      } catch (e) {
+        console.error("Failed to parse user session", e);
+      }
+    }
+  }, []);
+
   // Fetch the master ledger
- useEffect(() => {
+  useEffect(() => {
     const fetchLedger = async () => {
       try {
-        // Use your API client so it includes the Bearer token automatically
-        const { data } = await API.get('/recipes'); 
-        
+        const { data } = await API.get("/recipes");
         setRecipes(data);
         setLoading(false);
       } catch (err) {
@@ -23,6 +40,7 @@ export default function Profile() {
     };
     fetchLedger();
   }, []);
+
   // ================= ASSASSINATION FUNCTION =================
   const handleDelete = async (id, title) => {
     const confirmed = window.confirm(
@@ -32,20 +50,11 @@ export default function Profile() {
 
     setDeletingId(id);
     try {
-      const res = await fetch(
-        `https://the-minimalist-kitchen.onrender.com/api/recipes/${id}`,
-        {
-          method: "DELETE",
-        },
-      );
-
-      if (!res.ok) throw new Error("Server refused deletion request");
-
-      // Instantly filter it out of the local React RAM
+      await API.delete(`/recipes/${id}`);
       setRecipes((prev) => prev.filter((item) => item._id !== id));
       setDeletingId(null);
     } catch (err) {
-      alert(`Deletion failed: ${err.message}`);
+      alert(`Deletion failed: ${err.response?.data?.message || err.message}`);
       setDeletingId(null);
     }
   };
@@ -67,6 +76,16 @@ export default function Profile() {
     (r) => r.category === "Quick Meals",
   ).length;
 
+  // Helper to get initials (e.g., "Ravi Kumar" -> "RK")
+  const getInitials = (name) => {
+    if (!name) return "CK";
+    const parts = name.trim().split(" ");
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+  };
+
   return (
     <div className="max-w-6xl mx-auto p-6 md:p-10 space-y-10">
       {/* Top Breadcrumb */}
@@ -77,26 +96,26 @@ export default function Profile() {
         <span>←</span> Return to Kitchen Grid
       </Link>
 
-      {/* ================= SECTION 1: IDENTITY CARD ================= */}
+      {/* ================= SECTION 1: DYNAMIC IDENTITY CARD ================= */}
       <div className="bg-surface border border-borderCool rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-center gap-6 justify-between">
         <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
           <div className="w-24 h-24 rounded-2xl bg-gradient-to-tr from-accentCyan to-blue-600 flex items-center justify-center shadow-lg shadow-accentCyan/20 text-[#0A0F14] font-black text-4xl tracking-tighter sm:flex-shrink-0">
-            RK
+            {getInitials(currentUser.username)}
           </div>
           <div>
             <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
               <span className="bg-accentCyan/10 border border-accentCyan/30 text-accentCyan text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                System Architect
+                Kitchen Curator
               </span>
               <span className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                full stack developer
+                {currentUser.email}
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-textPrimary tracking-tight">
-              Ravi Kumar Kocherla
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-textPrimary tracking-tight uppercase">
+              {currentUser.username}
             </h1>
             <p className="text-xs sm:text-sm text-textSecondary mt-1">
-              Full-Stack Engineering Lead & Curator of The Minimalist Kitchen.
+              Active Session Curator & Master of The Minimalist Kitchen.
             </p>
           </div>
         </div>
