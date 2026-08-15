@@ -1,7 +1,8 @@
-import { useState, useEffect, useDeferredValue, useParams } from "react";
+import { useState, useEffect, useDeferredValue } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import RecipeCard from "../components/RecipeCard";
 import API from "../services/api";
+import { useParams } from "react-router-dom";
 
 const CATEGORIES = [
   "Breakfast",
