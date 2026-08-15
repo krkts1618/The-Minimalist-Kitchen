@@ -1,15 +1,16 @@
-import axios from 'axios';
+import axios from "axios";
 
 const API = axios.create({
-    baseURL: 'https://your-backend-url.onrender.com/api', // Make sure this is your live Render backend URL!
+  baseURL: "https://the-minimalist-kitchen.onrender.com/api",
 });
 
+// Automatically attach the JWT token to requests if it exists in localStorage
 API.interceptors.request.use((req) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        req.headers.Authorization = `Bearer ${token}`;
-    }
-    return req;
+  const token = localStorage.getItem("token");
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
+  }
+  return req;
 });
 
 export default API;
