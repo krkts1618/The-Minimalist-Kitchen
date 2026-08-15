@@ -89,7 +89,7 @@ export default function Home() {
                     : "bg-canvas text-textSecondary hover:text-textPrimary"
                 }`}
               >
-                ✨ All Cuisines
+                ✨ All Recipes 
               </button>
 
               {CATEGORIES.map((cat, idx) => (

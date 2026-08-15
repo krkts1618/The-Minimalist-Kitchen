@@ -103,7 +103,7 @@ export default function CreateRecipe() {
       <div className="bg-surface border border-borderCool rounded-3xl p-6 sm:p-10 shadow-xl">
         <div className="border-b border-borderCool pb-6 mb-8">
           <h1 className="text-3xl font-extrabold text-textPrimary tracking-tight">
-            Log New Curation
+            Log New Recipe
           </h1>
           <p className="text-sm text-textSecondary mt-1">
             Publish a new culinary specification directly into the global

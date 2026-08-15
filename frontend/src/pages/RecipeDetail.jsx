@@ -94,7 +94,7 @@ export default function RecipeDetail() {
         to="/"
         className="text-xs font-bold uppercase tracking-wider text-accentCyan hover:underline flex items-center gap-1 mb-6"
       >
-        <span>←</span> Back to all Curations
+        <span>←</span> Back to all Creations
       </Link>
 
       {/* Hero Header */}
