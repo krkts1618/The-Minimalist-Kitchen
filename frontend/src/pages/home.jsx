@@ -2,7 +2,6 @@ import { useState, useEffect, useDeferredValue } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import RecipeCard from "../components/RecipeCard";
 import API from "../services/api";
-import { useParams } from "react-router-dom";
 
 const CATEGORIES = [
   "Breakfast",
@@ -18,7 +17,7 @@ export default function Home() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { id } = useParams();
+
   // 2. User Input State
   const [searchQuery, setSearchQuery] = useState("");
   const [selectCategory, setSelectCategory] = useState("All");
@@ -45,7 +44,7 @@ export default function Home() {
     };
 
     fetchCloudRecipes();
-  }, [id]);
+  }, []);
 
   // 🧠 DERIVED ENGINE: Runs instantly off the buffered keyboard
   const filteredRecipes = recipes.filter((recipe) => {

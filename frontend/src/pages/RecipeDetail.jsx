@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-
+import API from "../services/api";
 export default function RecipeDetail() {
   const { id } = useParams();
   const [recipe, setRecipe] = useState(null);
@@ -13,15 +13,12 @@ export default function RecipeDetail() {
   const [isRunning, setIsRunning] = useState(false);
 
   // 1. Fetch data from backend
+
   useEffect(() => {
     const fetchSingleRecipe = async () => {
       try {
-        const res = await fetch(
-          `https://the-minimalist-kitchen.onrender.com/api/recipes/${id}`,
-        );
-        if (!res.ok) throw new Error("Failed to fetch dish details");
-
-        const data = await res.json();
+        // Use your custom API client which injects the Bearer token automatically!
+        const { data } = await API.get(`/recipes/${id}`);
         setRecipe(data);
 
         // Smart parse: Extract raw minutes from strings like "45 mins"
@@ -32,7 +29,7 @@ export default function RecipeDetail() {
 
         setLoading(false);
       } catch (err) {
-        setError(err.message);
+        setError(err.response?.data?.message || err.message);
         setLoading(false);
       }
     };

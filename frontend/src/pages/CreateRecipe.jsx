@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
+import API from "../services/api";
 const ALLOWED_CATEGORIES = [
   "Breakfast",
   "Lunch",
@@ -76,14 +76,7 @@ export default function CreateRecipe() {
     };
 
     try {
-      const res = await fetch(
-        "https://the-minimalist-kitchen.onrender.com/api/recipes",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        },
-      );
+      const res = await API.post("/recipes", payload);
 
       if (!res.ok) {
         const errData = await res.json();

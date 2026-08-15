@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import API from "../services/api";
 export default function Profile() {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -8,24 +8,21 @@ export default function Profile() {
   const [deletingId, setDeletingId] = useState(null);
 
   // Fetch the master ledger
-  useEffect(() => {
+ useEffect(() => {
     const fetchLedger = async () => {
       try {
-        const res = await fetch(
-          "https://the-minimalist-kitchen.onrender.com/api/recipes",
-        );
-        if (!res.ok) throw new Error("Failed to connect to backend vault");
-        const data = await res.json();
+        // Use your API client so it includes the Bearer token automatically
+        const { data } = await API.get('/recipes'); 
+        
         setRecipes(data);
         setLoading(false);
       } catch (err) {
-        setError(err.message);
+        setError(err.response?.data?.message || err.message);
         setLoading(false);
       }
     };
     fetchLedger();
   }, []);
-
   // ================= ASSASSINATION FUNCTION =================
   const handleDelete = async (id, title) => {
     const confirmed = window.confirm(
