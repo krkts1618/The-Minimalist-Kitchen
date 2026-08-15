@@ -113,7 +113,7 @@ export default function Home() {
         <section className="lg:col-span-3">
           <div className="mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
             <h2 className="text-2xl font-bold tracking-tight text-textPrimary">
-              Explore Curation
+              Explore Creation
             </h2>
             <span className="text-xs font-bold uppercase tracking-wider bg-canvas border border-borderCool px-3 py-1.5 rounded-lg text-textSecondary w-fit sm:w-auto">
               Showing {filteredRecipes.length} of {recipes.length} recipes

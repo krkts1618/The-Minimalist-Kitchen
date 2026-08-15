@@ -105,7 +105,7 @@ export default function Profile() {
           <div>
             <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
               <span className="bg-accentCyan/10 border border-accentCyan/30 text-accentCyan text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                Kitchen Curator
+                Kitchen Creator
               </span>
               <span className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                 {currentUser.email}
@@ -115,7 +115,7 @@ export default function Profile() {
               {currentUser.username}
             </h1>
             <p className="text-xs sm:text-sm text-textSecondary mt-1">
-              Active Session Curator & Master of The Minimalist Kitchen.
+              Active Session Creator & Master of The Minimalist Kitchen.
             </p>
           </div>
         </div>
@@ -124,7 +124,7 @@ export default function Profile() {
           to="/create"
           className="bg-accentCyan hover:bg-cyan-400 text-[#0A0F14] font-extrabold px-6 py-3 rounded-2xl text-xs uppercase tracking-wider transition-all shadow-lg shadow-accentCyan/10 sm:flex-shrink-0"
         >
-          + Curate New Dish
+          + Create New Dish
         </Link>
       </div>
 

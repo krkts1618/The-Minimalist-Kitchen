@@ -1,9 +1,26 @@
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import sun from "../assets/sun-shape-svgrepo-com.svg";
 import moon from "../assets/crescent-moon-phase-svgrepo-com.svg";
 
 export default function Navbar({ toggleBtn, darkmode, token, setToken }) {
   const navigate = useNavigate();
+  const [userInitial, setUserInitial] = useState("R");
+
+  // Read user from localStorage to extract the first letter of their name
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      try {
+        const parsedUser = JSON.parse(savedUser);
+        if (parsedUser.username) {
+          setUserInitial(parsedUser.username.charAt(0).toUpperCase());
+        }
+      } catch (e) {
+        console.error("Failed to parse user session in navbar", e);
+      }
+    }
+  }, [token]);
 
   const handleLogout = () => {
     // Clear session storage
@@ -50,7 +67,7 @@ export default function Navbar({ toggleBtn, darkmode, token, setToken }) {
               className="w-10 h-10 rounded-full flex items-center justify-center text-textPrimary text-lg font-bold border-2 border-textPrimary bg-canvas shadow-sm"
               to="/profile"
             >
-              R
+              {userInitial}
             </Link>
           </button>
         )}
